@@ -1,12 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ include file="../includes/header.jsp" %>
+<%@ include file="../includes/navbar.jsp" %>
 
-</body>
-</html>
+<div class="container text-center mt-5">
+
+    <h2>Registration Successful!</h2>
+    <p>Your client account has been created.</p>
+
+    <a href="clientLogin.jsp" class="btn btn-primary mt-3">Go to Login</a>
+
+</div>
+
+<%@ include file="../includes/footer.jsp" %>
