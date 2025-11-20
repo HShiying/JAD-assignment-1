@@ -5,7 +5,7 @@
 
     <h2 class="mb-4">Client Login</h2>
 
-    <form action="/ST0510-JAD-Assignment1/AuthController" method="post">
+    <form action="<%=request.getContextPath() %>/AuthController" method="post">
         <input type="hidden" name="action" value="clientLogin">
 
         <div class="mb-3">

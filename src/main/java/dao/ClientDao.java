@@ -1,7 +1,7 @@
 package dao;
 
 import java.sql.*;
-import util.DB;
+import util.SQLDB;
 import models.Client;
 
 public class ClientDao {
@@ -9,8 +9,7 @@ public class ClientDao {
     // Register new client
     public boolean register(Client c) {
         String sql = "INSERT INTO client(full_name, email, password, phone, address) VALUES (?, ?, ?, ?, ?)";
-
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, c.getFullName());
@@ -29,15 +28,18 @@ public class ClientDao {
     // Login validation
     public Client login(String email, String password) {
         String sql = "SELECT * FROM client WHERE email = ? AND password = ?";
-
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            System.out.println("DB Connection: " + conn);
+            System.out.println("Trying login with: " + email + " / " + password);
 
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                System.out.println("Login successful for: " + email);
                 return new Client(
                     rs.getInt("client_id"),
                     rs.getString("full_name"),
@@ -46,6 +48,8 @@ public class ClientDao {
                     rs.getString("phone"),
                     rs.getString("address")
                 );
+            } else {
+                System.out.println("No match found for: " + email + " / " + password);
             }
 
         } catch (Exception e) {
@@ -57,10 +61,10 @@ public class ClientDao {
     // Retrieve client info
     public Client getClientById(int clientId) {
         String sql = "SELECT * FROM client WHERE client_id = ?";
-
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
+            System.out.println("Fetching client with ID: " + clientId);
             ps.setInt(1, clientId);
             ResultSet rs = ps.executeQuery();
 
@@ -84,8 +88,7 @@ public class ClientDao {
     // Update
     public boolean update(Client c) {
         String sql = "UPDATE client SET full_name = ?, email = ?, phone = ?, address = ? WHERE client_id = ?";
-
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, c.getFullName());
@@ -104,8 +107,7 @@ public class ClientDao {
     // Delete
     public boolean delete(int clientId) {
         String sql = "DELETE FROM client WHERE client_id = ?";
-
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, clientId);
