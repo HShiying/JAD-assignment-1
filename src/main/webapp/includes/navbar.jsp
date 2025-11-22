@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
 
-  <a class="navbar-brand" href="/ST0510-JAD-Assignment1/public/home.jsp">
+  <a class="navbar-brand" href="<%=request.getContextPath() %>/public/home.jsp">
     Silver Care
   </a>
 
@@ -8,7 +8,7 @@
 
     <!-- PUBLIC -->
     <li class="nav-item">
-      <a class="nav-link" href="/ST0510-JAD-Assignment1/public/serviceCategories.jsp">Services</a>
+      <a class="nav-link" href="<%=request.getContextPath() %>/public/serviceCategories.jsp">Services</a>
     </li>
 
     <!-- CLIENT LOGGED IN -->
@@ -17,10 +17,10 @@
       if (client != null) {
     %>
       <li class="nav-item">
-        <a class="nav-link" href="/ST0510-JAD-Assignment1/client/clientDashboard.jsp">Dashboard</a>
+        <a class="nav-link" href="<%=request.getContextPath() %>/client/clientDashboard.jsp">Dashboard</a>
       </li>
       <li class="nav-item">
-        <form action="/ST0510-JAD-Assignment1/AuthController" method="post">
+        <form action="<%=request.getContextPath() %>/AuthController" method="post">
           <input type="hidden" name="action" value="logout">
           <button class="btn btn-danger btn-sm">Logout</button>
         </form>
@@ -28,7 +28,7 @@
     <% } else { %>
       <!-- NOT LOGGED IN -->
       <li class="nav-item">
-        <a class="nav-link" href="/ST0510-JAD-Assignment1/client/clientLogin.jsp">Login</a>
+        <a class="nav-link" href="<%=request.getContextPath() %>/client/clientLogin.jsp">Login</a>
       </li>
     <% } %>
 
@@ -38,7 +38,7 @@
       if (admin != null) {
     %>
       <li class="nav-item">
-        <a class="nav-link" href="/ST0510-JAD-Assignment1/admin/adminDashboard.jsp">Admin</a>
+        <a class="nav-link" href="<%=request.getContextPath() %>/admin/adminDashboard.jsp">Admin</a>
       </li>
     <% } %>
 

@@ -5,7 +5,7 @@
 
     <h2 class="mb-4">Create Client Account</h2>
 
-    <form action="/ST0510-JAD-Assignment1/ClientController" method="post">
+    <form action="<%=request.getContextPath() %>/ClientController" method="post">
         <input type="hidden" name="action" value="register">
 
         <div class="mb-3">

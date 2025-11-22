@@ -1,14 +1,14 @@
 package dao;
 
 import java.sql.*;
-import util.DB;
+import util.SQLDB;
 
 public class AdminDao {
 
     public boolean validateLogin(String username, String password) {
         String sql = "SELECT * FROM admin WHERE username = ? AND password = ?";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, username);

@@ -2,17 +2,16 @@ package dao;
 
 import java.sql.*;
 import java.util.*;
-import util.DB;
+import util.SQLDB;
 import models.Category;
 
 public class CategoryDao {
 
-    // List all categories
     public List<Category> getAllCategories() {
         List<Category> list = new ArrayList<>();
         String sql = "SELECT * FROM service_category ORDER BY category_id ASC";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ResultSet rs = ps.executeQuery();
@@ -20,7 +19,7 @@ public class CategoryDao {
                 list.add(new Category(
                     rs.getInt("category_id"),
                     rs.getString("category_name"),
-                    rs.getString("category_desc")
+                    rs.getString("description")   // FIX
                 ));
             }
         } catch (Exception e) {
@@ -29,11 +28,10 @@ public class CategoryDao {
         return list;
     }
 
-    // Add new category
     public boolean addCategory(Category c) {
-        String sql = "INSERT INTO service_category (category_name, category_desc) VALUES (?, ?)";
+        String sql = "INSERT INTO service_category (category_name, description) VALUES (?, ?)";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, c.getCategoryName());
@@ -46,11 +44,10 @@ public class CategoryDao {
         }
     }
 
-    // Get category by ID
     public Category getCategoryById(int id) {
         String sql = "SELECT * FROM service_category WHERE category_id = ?";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -60,7 +57,7 @@ public class CategoryDao {
                 return new Category(
                     rs.getInt("category_id"),
                     rs.getString("category_name"),
-                    rs.getString("category_desc")
+                    rs.getString("description")  // FIX
                 );
             }
 
@@ -70,11 +67,10 @@ public class CategoryDao {
         return null;
     }
 
-    // Update category
     public boolean updateCategory(Category c) {
-        String sql = "UPDATE service_category SET category_name = ?, category_desc = ? WHERE category_id = ?";
+        String sql = "UPDATE service_category SET category_name = ?, description = ? WHERE category_id = ?";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, c.getCategoryName());
@@ -88,11 +84,10 @@ public class CategoryDao {
         }
     }
 
-    // Delete category
     public boolean deleteCategory(int id) {
         String sql = "DELETE FROM service_category WHERE category_id = ?";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);

@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.*;
 import java.util.*;
-import util.DB;
+import util.SQLDB;
 import models.Service;
 
 public class ServiceDao {
@@ -12,7 +12,7 @@ public class ServiceDao {
         List<Service> list = new ArrayList<>();
         String sql = "SELECT * FROM service ORDER BY service_id ASC";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ResultSet rs = ps.executeQuery();
@@ -38,7 +38,7 @@ public class ServiceDao {
         List<Service> list = new ArrayList<>();
         String sql = "SELECT * FROM service WHERE category_id = ?";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, categoryId);
@@ -48,7 +48,7 @@ public class ServiceDao {
                 list.add(new Service(
                     rs.getInt("service_id"),
                     rs.getString("service_name"),
-                    rs.getString("service_desc"),
+                    rs.getString("description"),
                     rs.getDouble("price"),
                     rs.getInt("category_id"),
                     rs.getString("image_path")
@@ -61,11 +61,36 @@ public class ServiceDao {
         return list;
     }
 
-    // Retrieve 1 service
+//    // Retrieve 1 service
+//    public Service getServiceById(int serviceId) {
+//        String sql = "SELECT * FROM service WHERE service_id = ?";
+//
+//        try (Connection conn = SQLDB.getConnection();
+//             PreparedStatement ps = conn.prepareStatement(sql)) {
+//
+//            ps.setInt(1, serviceId);
+//            ResultSet rs = ps.executeQuery();
+//
+//            if (rs.next()) {
+//                return new Service(
+//                    rs.getInt("service_id"),
+//                    rs.getString("service_name"),
+//                    rs.getString("service_desc"),
+//                    rs.getDouble("price"),
+//                    rs.getInt("category_id"),
+//                    rs.getString("image_path")
+//                );
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
     public Service getServiceById(int serviceId) {
         String sql = "SELECT * FROM service WHERE service_id = ?";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();   // <-- FIXED
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, serviceId);
@@ -75,7 +100,7 @@ public class ServiceDao {
                 return new Service(
                     rs.getInt("service_id"),
                     rs.getString("service_name"),
-                    rs.getString("service_desc"),
+                    rs.getString("description"),  // matches DB
                     rs.getDouble("price"),
                     rs.getInt("category_id"),
                     rs.getString("image_path")
@@ -92,7 +117,7 @@ public class ServiceDao {
     public boolean addService(Service s) {
         String sql = "INSERT INTO service(service_name, service_desc, price, category_id, image_path) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, s.getServiceName());
@@ -112,7 +137,7 @@ public class ServiceDao {
     public boolean updateService(Service s) {
         String sql = "UPDATE service SET service_name = ?, service_desc = ?, price = ?, category_id = ?, image_path = ? WHERE service_id = ?";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, s.getServiceName());
@@ -133,7 +158,7 @@ public class ServiceDao {
     public boolean deleteService(int id) {
         String sql = "DELETE FROM service WHERE service_id = ?";
 
-        try (Connection conn = DB.getConnection();
+        try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
