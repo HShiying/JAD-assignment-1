@@ -14,7 +14,7 @@
 <div class="container mt-4" style="max-width: 600px;">
     <h2>Edit Profile</h2>
 
-    <form action="/ST0510-JAD-Assignment1/ClientController" method="post">
+    <form action="<%=request.getContextPath() %>/ClientController" method="post">
         <input type="hidden" name="action" value="updateProfile">
         <input type="hidden" name="clientId" value="<%= c.getClientId() %>">
 

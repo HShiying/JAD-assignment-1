@@ -52,11 +52,17 @@ public class ClientController extends HttpServlet {
             );
 
             if (dao.update(c)) {
-                response.sendRedirect("client/clientProfile.jsp");
-            } else {
-                request.setAttribute("error", "Update failed");
-                request.getRequestDispatcher("client/clientEditProfile.jsp").forward(request, response);
+                // Fetch fresh client data from DB
+                Client freshClient = dao.getClientById(c.getClientId());
+                // Update session
+                request.getSession().setAttribute("client", freshClient);
+                
+                response.sendRedirect("client/clientProfile.jsp?success=1");
             }
+			else {
+				request.setAttribute("error", "Update failed");
+				request.getRequestDispatcher("client/editClientProfile.jsp").forward(request, response);
+			}
         }
 
         // DELETE CLIENT ACCOUNT

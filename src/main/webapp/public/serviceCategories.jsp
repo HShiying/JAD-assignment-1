@@ -18,7 +18,7 @@
                     <p><%= c.getCategoryDesc() %></p>
 
                     <a class="btn btn-primary"
-                       href="servicesByCategory.jsp?categoryId=<%= c.getCategoryId() %>">
+                       href="serviceByCategory.jsp?categoryId=<%= c.getCategoryId() %>">
                        View Services
                     </a>
                 </div>
