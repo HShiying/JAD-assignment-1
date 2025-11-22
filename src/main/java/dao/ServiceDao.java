@@ -20,7 +20,7 @@ public class ServiceDao {
                 list.add(new Service(
                     rs.getInt("service_id"),
                     rs.getString("service_name"),
-                    rs.getString("service_desc"),
+                    rs.getString("description"),
                     rs.getDouble("price"),
                     rs.getInt("category_id"),
                     rs.getString("image_path")
@@ -113,18 +113,18 @@ public class ServiceDao {
         return null;
     }
 
-    // Add new service
     public boolean addService(Service s) {
-        String sql = "INSERT INTO service(service_name, service_desc, price, category_id, image_path) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO service(service_name, description, price, category_id, image_path) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, s.getServiceName());
-            ps.setString(2, s.getServiceDesc());
+            ps.setString(2, s.getServiceDesc()); // mapped correctly
             ps.setDouble(3, s.getPrice());
             ps.setInt(4, s.getCategoryId());
             ps.setString(5, s.getImagePath());
+
             return ps.executeUpdate() > 0;
 
         } catch (Exception e) {
@@ -133,9 +133,9 @@ public class ServiceDao {
         }
     }
 
-    // Update service
+
     public boolean updateService(Service s) {
-        String sql = "UPDATE service SET service_name = ?, service_desc = ?, price = ?, category_id = ?, image_path = ? WHERE service_id = ?";
+        String sql = "UPDATE service SET service_name = ?, description = ?, price = ?, category_id = ?, image_path = ? WHERE service_id = ?";
 
         try (Connection conn = SQLDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -146,6 +146,7 @@ public class ServiceDao {
             ps.setInt(4, s.getCategoryId());
             ps.setString(5, s.getImagePath());
             ps.setInt(6, s.getServiceId());
+
             return ps.executeUpdate() > 0;
 
         } catch (Exception e) {
@@ -153,6 +154,7 @@ public class ServiceDao {
             return false;
         }
     }
+
 
     // Delete
     public boolean deleteService(int id) {

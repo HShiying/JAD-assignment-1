@@ -11,9 +11,9 @@ import models.Service;
 @WebServlet("/ServiceController")
 public class ServiceController extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
@@ -22,8 +22,8 @@ public class ServiceController extends HttpServlet {
         if ("addService".equals(action)) {
             Service s = new Service(
                 0,
-                request.getParameter("name"),
-                request.getParameter("desc"),
+                request.getParameter("serviceName"),
+                request.getParameter("serviceDesc"),
                 Double.parseDouble(request.getParameter("price")),
                 Integer.parseInt(request.getParameter("categoryId")),
                 request.getParameter("imagePath")
@@ -35,8 +35,8 @@ public class ServiceController extends HttpServlet {
         if ("updateService".equals(action)) {
             Service s = new Service(
                 Integer.parseInt(request.getParameter("serviceId")),
-                request.getParameter("name"),
-                request.getParameter("desc"),
+                request.getParameter("serviceName"),
+                request.getParameter("serviceDesc"),
                 Double.parseDouble(request.getParameter("price")),
                 Integer.parseInt(request.getParameter("categoryId")),
                 request.getParameter("imagePath")
@@ -52,3 +52,5 @@ public class ServiceController extends HttpServlet {
         }
     }
 }
+
+

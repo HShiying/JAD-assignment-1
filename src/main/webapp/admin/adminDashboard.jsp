@@ -22,16 +22,16 @@
                 <h5>Admin Dashboard</h5>
                 <ul class="nav flex-column mt-4">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Dashboard Home</a>
+                        <a class="nav-link active" href="adminDashboard.jsp">Dashboard Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Manage Service Categories</a>
+                        <a class="nav-link" href="<%=request.getContextPath() %>/admin/categories/adminListCategories.jsp">Manage Service Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Manage Services</a>
+                        <a class="nav-link" href="<%=request.getContextPath() %>/admin/services/adminListServices.jsp">Manage Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="/ST0510-JAD-Assignment1/AdminAuthController?action=logout">Logout</a>
+                        <a class="nav-link text-danger" href="<%=request.getContextPath() %>/AuthController?action=logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -45,9 +45,10 @@
 
             <!-- Quick Actions -->
             <div class="mb-4">
-                <button class="btn btn-success me-2">Add Category</button>
-                <button class="btn btn-primary">Add Service</button>
+                <a href="<%=request.getContextPath() %>/admin/categories/adminAddCategory.jsp" class="btn btn-success me-2">Add Category</a>
+                <a href="<%=request.getContextPath() %>/admin/services/adminAddService.jsp" class="btn btn-primary">Add Service</a>
             </div>
+
 
             <!-- Example Table -->
             <h4>Services Overview</h4>
