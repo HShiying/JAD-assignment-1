@@ -13,6 +13,14 @@
 
 <%@ include file="../includes/header.jsp" %>
 <%@ include file="../includes/navbar.jsp" %>
+<%
+    if (session.getAttribute("admin") == null) {
+        response.sendRedirect("adminLogin.jsp"); // redirect to login if not logged in
+        return;
+    }
+%>
+
+
 
 <div class="container-fluid">
     <div class="row">
@@ -29,6 +37,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<%=request.getContextPath() %>/admin/services/adminListServices.jsp">Manage Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=request.getContextPath() %>/admin/clients/adminListClients.jsp">Manage Clients</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-danger" href="<%=request.getContextPath() %>/AuthController?action=logout">Logout</a>

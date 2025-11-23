@@ -1,6 +1,8 @@
 package dao;
 
 import java.sql.*;
+import java.util.*;
+
 import util.SQLDB;
 import models.Client;
 
@@ -118,4 +120,29 @@ public class ClientDao {
             return false;
         }
     }
+    // Get all clients
+    public List<Client> getAllClients() {
+        List<Client> list = new ArrayList<>();
+        String sql = "SELECT * FROM client ORDER BY client_id ASC";
+
+        try (Connection conn = SQLDB.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Client(
+                    rs.getInt("client_id"),
+                    rs.getString("full_name"),
+                    rs.getString("email"),
+                    rs.getString("password"),
+                    rs.getString("phone"),
+                    rs.getString("address")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }
