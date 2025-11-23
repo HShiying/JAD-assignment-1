@@ -1,6 +1,8 @@
 <%@ page import="dao.ServiceDao, dao.CategoryDao, java.util.List, models.Service, models.Category" %>
 <%@ include file="../../includes/header.jsp" %>
 <%@ include file="../../includes/navbar.jsp" %>
+<%@ include file="../../includes/adminSessionCheck.jsp" %>
+
 
 <%
     ServiceDao serviceDao = new ServiceDao();

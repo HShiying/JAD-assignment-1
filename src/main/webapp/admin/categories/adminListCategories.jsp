@@ -1,6 +1,7 @@
 <%@ page import="dao.CategoryDao, java.util.List, models.Category" %>
 <%@ include file="../../includes/header.jsp" %>
 <%@ include file="../../includes/navbar.jsp" %>
+<%@ include file="../../includes/adminSessionCheck.jsp" %>
 
 <%
     CategoryDao dao = new CategoryDao();

@@ -13,6 +13,9 @@
                 <a class="nav-link" href="<%=request.getContextPath()%>/admin/services/adminListServices.jsp">Manage Services</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath() %>/admin/clients/adminListClients.jsp">Manage Clients</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link text-danger" href="<%=request.getContextPath()%>/AuthController?action=logout">Logout</a>
             </li>
         </ul>
