@@ -10,7 +10,7 @@ public class DB {
 		String user = System.getenv("DB_USER");
 		String db = System.getenv("DB_PASSWORD");
 		try {
-			Class.forName("org.postgresql.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
