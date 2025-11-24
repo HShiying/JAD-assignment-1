@@ -25,25 +25,30 @@ public class AdminDao {
 
     // Delete client (admin privilege)
     public boolean deleteClient(int clientId) {
-        String sql = "DELETE FROM client WHERE client_id = ?";
-        try (Connection conn = SQLDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        String deleteFeedbackSql = "DELETE FROM feedback WHERE client_id = ?";
+        String deleteClientSql = "DELETE FROM client WHERE client_id = ?";
 
-            ps.setInt(1, clientId);
-            int rowsDeleted = ps.executeUpdate();
-            
-            if (rowsDeleted == 0) {
-                System.out.println("No client deleted. ID might not exist: " + clientId);
+        try (Connection conn = SQLDB.getConnection()) {
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement ps1 = conn.prepareStatement(deleteFeedbackSql)) {
+                ps1.setInt(1, clientId);
+                ps1.executeUpdate();
             }
+
+            int rowsDeleted = 0;
+            try (PreparedStatement ps2 = conn.prepareStatement(deleteClientSql)) {
+                ps2.setInt(1, clientId);
+                rowsDeleted = ps2.executeUpdate();
+            }
+
+            conn.commit();
             return rowsDeleted > 0;
 
         } catch (SQLException e) {
-            System.out.println("SQL Exception while deleting client ID " + clientId);
-            e.printStackTrace();
-            return false;
-        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
+
 }
