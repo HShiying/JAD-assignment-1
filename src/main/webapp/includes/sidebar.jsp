@@ -16,7 +16,10 @@
                 <a class="nav-link" href="<%=request.getContextPath() %>/admin/clients/adminListClients.jsp">Manage Clients</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-danger" href="<%=request.getContextPath()%>/AuthController?action=logout">Logout</a>
+                <form action="<%=request.getContextPath() %>/AuthController" method="post" style="display:inline;">
+                            <input type="hidden" name="action" value="logout">
+                            <button type="submit" class="btn btn-link nav-link text-danger p-0">Logout</button>
+                </form>
             </li>
         </ul>
     </div>

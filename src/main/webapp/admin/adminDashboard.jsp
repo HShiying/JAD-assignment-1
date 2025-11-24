@@ -1,26 +1,14 @@
-<!--<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>-->
-
+<%@ page import="dao.ServiceDao, dao.CategoryDao, java.util.List, models.Service, models.Category" %>
 <%@ include file="../includes/header.jsp" %>
 <%@ include file="../includes/navbar.jsp" %>
+<%@ include file="../includes/adminSessionCheck.jsp" %>
+
 <%
-    if (session.getAttribute("admin") == null) {
-        response.sendRedirect("adminLogin.jsp"); // redirect to login if not logged in
-        return;
-    }
+    // Fetch services dynamically
+    ServiceDao serviceDao = new ServiceDao();
+    List<Service> services = serviceDao.getAllServices();
+    CategoryDao categoryDao = new CategoryDao();
 %>
-
-
 
 <div class="container-fluid">
     <div class="row">
@@ -42,7 +30,10 @@
                         <a class="nav-link" href="<%=request.getContextPath() %>/admin/clients/adminListClients.jsp">Manage Clients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="<%=request.getContextPath() %>/AuthController?action=logout">Logout</a>
+                        <form action="<%=request.getContextPath() %>/AuthController" method="post" style="display:inline;">
+                            <input type="hidden" name="action" value="logout">
+                            <button type="submit" class="btn btn-link nav-link text-danger p-0">Logout</button>
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -60,8 +51,7 @@
                 <a href="<%=request.getContextPath() %>/admin/services/adminAddService.jsp" class="btn btn-primary">Add Service</a>
             </div>
 
-
-            <!-- Example Table -->
+            <!-- Services Table -->
             <h4>Services Overview</h4>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered align-middle">
@@ -76,18 +66,29 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <% for (Service s : services) { 
+                            Category cat = categoryDao.getCategoryById(s.getCategoryId());
+                        %>
                         <tr>
-                            <td>1</td>
-                            <td>Food</td>
-                            <td>Pizza Delivery</td>
-                            <td><img src="../images/p101.png" width="50" alt="Pizza"></td>
-                            <td>$10</td>
+                            <td><%= s.getServiceId() %></td>
+                            <td><%= cat != null ? cat.getCategoryName() : "N/A" %></td>
+                            <td><%= s.getServiceName() %></td>
                             <td>
-                                <button class="btn btn-sm btn-warning">Edit</button>
-                                <button class="btn btn-sm btn-danger">Delete</button>
+                                <img src="<%= request.getContextPath() + "/" + s.getImagePath() %>" width="50" alt="<%= s.getServiceName() %>"/>
+                            </td>
+                            <td>$<%= s.getPrice() %></td>
+                            <td>
+                                <a href="adminEditService.jsp?serviceId=<%=s.getServiceId()%>" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="<%= request.getContextPath() %>/ServiceController" method="post" style="display:inline;">
+                                    <input type="hidden" name="action" value="deleteService">
+                                    <input type="hidden" name="serviceId" value="<%= s.getServiceId() %>">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this service?');">
+                                    Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
-                        <!-- Repeat rows dynamically from DB -->
+                        <% } %>
                     </tbody>
                 </table>
             </div>

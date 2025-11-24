@@ -58,7 +58,7 @@ public class AuthController extends HttpServlet {
         // LOGOUT
         if ("logout".equals(action)) {
             request.getSession().invalidate();
-            response.sendRedirect("public/home.jsp");
+            response.sendRedirect("public/index.jsp");
         }
     }
 }

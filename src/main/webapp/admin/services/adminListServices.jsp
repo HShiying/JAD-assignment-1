@@ -43,7 +43,9 @@
                             <td><%= cat != null ? cat.getCategoryName() : "N/A" %></td>
                             <td><%= s.getServiceName() %></td>
                             <td>$<%= s.getPrice() %></td>
-                            <td><img src="<%= s.getImagePath() %>" width="50"/></td>
+                            <td>
+                                  <img src="<%= request.getContextPath() + "/" + s.getImagePath() %>" width="100" alt="<%= s.getServiceName() %>"/>
+                            </td>
                             <td>
                                 <a href="adminEditService.jsp?serviceId=<%=s.getServiceId()%>" class="btn btn-warning btn-sm">Edit</a>
                                 <form action="<%= request.getContextPath() %>/ServiceController" method="post" style="display:inline;">
