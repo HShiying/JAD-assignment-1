@@ -66,7 +66,7 @@ The system follows proper MVC structure (Model–View–Controller), uses a MySQ
 
 ---
 
-## 🗄 Database Schema
+## Database Schema
 
 ### **Tables**
 - `admin(admin_id, username, password)`
@@ -87,7 +87,7 @@ The system follows proper MVC structure (Model–View–Controller), uses a MySQ
 ## Frontend / UI
 Two complete themes:
 
-### 🌫 Admin UI  
+### Admin UI  
 - Gradient navbar  
 - Animated collapsible sidebar  
 - Clean metrics dashboard  
@@ -100,7 +100,7 @@ Two complete themes:
 
 ---
 
-## 🔧 Technologies Used
+## Technologies Used
 - Java 17  
 - JSP + JSTL  
 - Servlets  
